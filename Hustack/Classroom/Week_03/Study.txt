@@ -1,0 +1,25 @@
+Segment trees: full binary trees
+    - Each node manages a segment in the tree. 
+    - Root node with id = 1 manages the segment with index [1, n] 
+    - Each node with id = v manages the segment with index [i, j], then
+        + left child node with id = 2v manages the segment with index [i, (i+j)/2]
+        + right child node with id = 2v + 1 manages the segment with index [(i+j)/2 + 1, j]
+
+Data structure represents each node of the tree
+    - id: index of the node
+    - L and R: start index and end index of subsequence that the node manages. 
+    - maxVal[id]: the largest value of subsequence that the node manages. 
+
+
+How to build Segment Tree?
+    I will use the 1D array to save the max value of the subsequence from i to j. I will name it is maxValue[sizeArr * 4];
+        + sizeArr is the size of sequence from left to right. 
+        + this array can save the maximum 4 * sizeArr node in the worst case. 
+    
+    Detailed description, I build up this algorithm based on recursive technique. 
+        + Basic step: if (left == right) then: 
+                maxValue[id] = a[left];
+        + Recursive step: I will build the left tree and then the right tree by the way. 
+            + Traverse the left child of current node, and then traverse the right child of current node. 
+            + Update the value of maxValue[id] which is the intersection of maxValue[leftChild] and maxValue[rightChild]. 
+            + Because the parent node manages the segment which is the union of two subsegments are managed by two child nodes. 

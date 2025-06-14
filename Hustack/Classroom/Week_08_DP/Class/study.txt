@@ -1,0 +1,58 @@
+/* Thao tác xử lý bit và ứng dụng (Bit Manipulation)
+    I. Tổng quan về bit và xử lý bit
+        Chúng ta đều biết rằng máy tính làm việc với các giá trị nhị phân 0 - 1, gọi là các bit, nhờ vậy máy tính hoạt động vô cùng nhanh. Trong lập trình thi đấu, việc áp dụng các bit nhị phân để xử lý bài toán là một kĩ thuật cực kì thú vị, không chỉ giúp cho tốc độ thuật toán được cải thiện đáng kể, mà còn làm tối ưu bộ nhớ và đơn giản hoá chương trình. Kĩ thuật này được gọi là thao tác bit (bit manipulation), là kĩ thuật sử dụng các bit của một số nguyên không âm (biểu diễn nhị phân) để biểu diễn một tập hợp, đì kèm với đó là những mẹo để xử lý các bit của một số nguyên. 
+
+    1. Các toán tử trên bit (Bitwise operators)
+        Cơ bản
+        Những thứ cơ bản nhất (cũng là quan trọng) nhất trong thao tác bit là các toán tử trên bit: AND(&), OR (|), XOR (^), NOT(~). Những toán tử này phần nào giống với các toán tử logic &&, ||, !, tuy nhiên điều khác biệt là chúng sẽ làm việc trên các bit của hai số nguyên. 
+
+        Như vậy, khi sử dụng các toán tử này với hai số nguyên, chẳng hạn như 10 & 5, thì từng cặp bit tương ứng trên biểu diễn nhị phân của hai toán hạng sẽ được so khới với nhau theo toán tử. Nếu như số lượng bit của hai số khác nhau, thì chữ số 0 sẽ được tự động thêm vào phía bên trái để độ dài biểu diễn nhị phân của chúng bằng nhau (số lượng chữ số 0 thêm vào phụ thuộc vào kiểu dữ liệu của các số nguyên đó là bao nhiêu bit): 
+            10 = 1010
+            5  = 0101
+            10 & 5 = 0000
+            10 | 5 = 1111
+            10 ^ 5 = 1111
+            ~A = 0101
+            ~B = 1010
+
+        Toán tử dịch bit, << dịch trái vs >> dịch phải. Đôi với các số không âm thì khi ta viết là a << b thì ta dịch b bit của a sang bên trái, tương ứng với việc điền b số 0 vào bên phải của a. Còn khi ta viết là a >> b thì ta dịch b bit của a sang bên phải, tương ứng với việc điền b chữ số 0 vào bên trái của a. Phép dịch trái tương ứng với a * 2^b, còn phép dịch phải tương ứng với a / 2^b (chỉ áp dụng cho số nguyên). 
+
+        Lưu ý: Khi tính toán các giá trị a << b mà có khả năng kết quả vượt quá int, phải tiến hành ép kiểu để tránh bị tràn số. Chẳng hạn như 1 << n là tính 2^n, khi n >= 32 thì giá trị sẽ vượt quá int, vì thế tai phải viết là 1LL < n. 
+
+    2. Sử dụng bit để biểu diễn tập hợp
+        Biểu diễn tâph hợp thông qua biểu diễn nhị phân
+            Ta có thể lợi dụng biểu diễn nhị phân của một số nguyên lên tới 32 bit (hoặc 64 bit nếu như ngôn ngữ lập trình có kiểu số nguyên 64 bit) để biểu diễn một tập hợp, với bit 1 thể hiện rằng phần tử ở vị trí tương ứng có thể xuất hiện trong tập hợp, và bit 0 để thể hiện phần tử đó không xuất hiện. 
+
+        Giả sử A và B là hai biểu diễn nhị phân đại diện cho 02 tập hợp, thì ta có thể sử dụng các toán tử thao tác bit để thực hiện các toán tử thao tác bit để thực hiện các phép toán trên tập hợp này như sau: 
+            + Phép toán hợp (Set union): A | B
+            + Phép toán giao (Set intersaction): A & B
+            + Phép toán hiệu (Set substraction): A & ~B
+            + Phép toán phủ định tập hợp (Set negation): ALL_BITS ^ A - với ALL_BITS là một số nguyên gồm toàn bit 1 với độ dài bằng với độ dài của A. 
+
+        "Bật" và "Tắt" bit
+            Ta có thể "bật" (set) một bit ở vị trí n của số nguyên A lên với hai bước sau: 
+                + Bước 1: Tạo số nguyên với bit 1 ở vị trí thứ n, các bit còn lại đều bằng 0 là 1 << n. 
+                + Bước 2: Lấy số nguyên A đem OR với 1 << n. Vậy ta có công thức A |= (1 << n)
+
+            Hoàn toàn tương tự, ta có thể "tắt" (clear/unset) một bit ở vị trí n của số nguyên A với hai bước sau: 
+                + Bước 1: Tạo số nguyên với bit 1 ở vị trí thứ n, các bit còn lại đều bằng 0, rồi phủ định nó bằng toán tử NOT: ~(1 << n)
+                + Bước 2: Lấy số nguyên A đem AND với ~(1 << n). Vậy ta có công thức: A &= (~(1 << n))
+        
+        Kiểm tra bit đang bật hay tắt
+            Ta có thể kiểm tra một bit ở vị trí n của số A có phải bằng 1 không thông qua các bước sau: 
+                + Bước 1: Tạo số bit 1 ở vị trí n bằng công thức 1 << n. 
+                + Bước 2: Lấy số A đem AND với số 1 << n, nếu như bit ở vị trí n đang bật thì kết quả sẽ khác 0, ngược lại thì kết quả bằng 0. Vậy ta có công thức (A & (1 << n)) != 0
+
+        Lật bit
+            Lật bit là thao tác đảo ngược giá trị của bit, từ 0 thành 1 hoặc từ 1 thành 0. Lợi dụng toán tử XOR, ta có thể đảo bit ở vị trí n của số A như sau: 
+                + Bước 1: Tạo số với bit 1 ở vị trí n bằng công thức 1 << n. 
+                + Bước 2: Lấy số A đem XOR với số 1 << n để thu được số mới đã lật bit tại vị trí n: 
+                            A ^= (1 << n)
+
+    II. Một số mẹo hay với thao tác bit
+        Dựa vào bit, chúng ta có thể thực hiện rất nhiều kĩ thuật với độ tối ưu cao. Trong phần này chúng ta sẽ thảo luận về những kĩ thuật này. Nếu như áp dụng đúng cách, chúng sẽ giúp cho chương trình có tốc độ thực thi rất nhanh và có thể biến code từ TLE (Time Limited Exceeded) thành AC (Accepted Code). 
+
+    1. Một số hàm builtin quan trọng trong thư viện GCC
+    2. Các kĩ thuật thú vị với thao tác bit
+    https://viblo.asia/p/thao-tac-xu-ly-bit-va-ung-dung-bit-manipulation-3kY4gxl9JAe
+*/

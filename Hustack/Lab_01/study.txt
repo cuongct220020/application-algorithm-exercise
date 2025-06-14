@@ -1,0 +1,25 @@
+Hint of the Largest black subrectangle problem
+    + Solve sub-problem: Column h(i) have height h[i] (i = 1, 2,...,n). Find the way to cut out the largest-area rectangle from the give configure. 
+    
+    + For each index i: 
+        + Move left and move right as far as possible to cut out the largest rectangle having height h[i]
+         
+        + The largest are built from column i is:
+                (R[i] - L[i] - 1) * h[i]
+    
+    + Use a stack S for storing indices: 
+
+
+Hàm nextSmaller(vector<int>& hist)
+    Mục đích: Tìm phần tử nhỏ hơn gần nhất bên phải của mỗi thanh trong biểu đồ. 
+    Cách hoạt động: 
+        + Sử dụng stack để lưu các chỉ số của thanh khi duyệt từ trái sang phải. 
+        + Mỗi khi tìm thấy một thanh có chiều cao nhỏ hơn chiều cao của thanh đó trên đỉnh stack, cập nhật chỉ số phần tử nhỏ hơn tiếp theo của thanh đó. 
+        + Kết quả trả về là một vector nextS chứa chỉ số phần tử nhỏ hơn gần nhất bên phải hoặc giá trị n (số lượng phần tử) nếu không có phần tử nhỏ hơn nào. 
+
+Hàm prevSmaller (vector<int>& hist)
+    Mục đích: Tìm phần tử nhỏ hơn gần nhất bên trái của mỗi thanh
+    Cách hoạt động: 
+        + Sử dụng stack tương tự như trong hàm nextSmaller, nhưng duyệt từ trái sang phải và tìm phần tử nhỏ hơn phía trước.
+        + Khi tìm thấy một phần tử nhỏ hơn ở phía trước, lưu lại chỉ số của phần tử đó trong mảng prevS. 
+        + Nếu không có phần tử nhỏ hơn ở phía trước, lưu giá trị -1. 

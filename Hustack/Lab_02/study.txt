@@ -1,0 +1,14 @@
+/*  Branch and Bound Algorithm
+
+    The Branch and Bound Algorithm is a method used in combinational optimization problems to systematically search for the best solution. It works by dividing the problem into smaller subproblems, or branches, and then eliminating certain branches based on bounds on the optimal solution. This process continues until the best solution is found or all branches have been explored. Branch and Bound is commonly used in problems like the traveling salesman and job scheduling. 
+
+    https://www.geeksforgeeks.org/branch-and-bound-algorithm/
+*/
+
+/*  Ý tưởng của Branch and Bound Algorithm
+
+    Ý tưởng của thuật toán này vẫn giống thuật toán quay lui (Backtracking Algorithm) khi ta cố gắng biểu diễn lời giải của bài toán bằng một tập (x1, x2,..., xn), mỗi x_i được chọn từ một tập ứng viên S_i.
+
+    Tuy nhiên, điểm khác ở chỗ là mỗi khi thêm x_k vào lời giải thì ta sẽ đánh giá lời giải hiện tại (x1, x2,..., x_k) xem nó có tốt hơn lời giải hiện tại hay không, để đánh giá ta dùng một hàm f(X) đặc trưng cho cận dưới của bài toán (đối với bài toán tìm min) và cận trên của bài toán (đối với bài toán tìm max). Nếu mỗi khi thêm x_k+1 vào mà làm cho lời giải tệ hơn thì ta sẽ không phát triển thêm lời giải từ nhánh có x_k+1
+
+*/

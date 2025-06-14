@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "tuple": "cpp",
+        "variant": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "*.tcc": "cpp",
+        "memory": "cpp",
+        "format": "cpp",
+        "functional": "cpp",
+        "utility": "cpp"
+    }
+}

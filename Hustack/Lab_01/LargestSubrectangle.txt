@@ -1,0 +1,16 @@
+Algorithm: 
+    1. Run a loop to traverse through the rows
+    
+    2. Now if the current row is not the first row then update the row as follows. if matrix[i][j] is not zero then 
+            matrix[i][j] = matrix[i-1][j] + maxtrix[i][j];
+
+    3. Find the maximum rectangular area under the histogram, consider ith row as heights of bars of a histogram.
+    
+    4. Do the previous two step for all rows print the maximum area of all the rows. 
+
+https://www.geeksforgeeks.org/largest-rectangular-area-in-a-histogram-using-stack/
+
+https://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
+
+https://www.geeksforgeeks.org/maximum-size-rectangle-binary-sub-matrix-1s/
+

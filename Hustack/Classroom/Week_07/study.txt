@@ -1,0 +1,177 @@
+/* Divide and Conquer Algorithm
+    
+    Application of Divide and Conquer Algorithms: 
+        - Quick Sort
+        - Merge Sort
+        - Closet Pair of Points: The problem is to find the closte pair of points in a set of points in the x-y plane. 
+        - Strassen's Algorithm is an efficient algorithm to multiply two matrices. A simple method to multiply two matrices needs 3 nested loops and is O(n^3). Strassen's algorithm multiplies two matrices in O(n^2.8974) time. 
+        - Cooley–Tukey Fast Fourier Transform (FFT) algorithm is the most common algorithm for FFT. It is a divide and conquer algorithm which works in O(N log N) time.
+        - Karatsuba algorithm for fast multiplication does the multiplication of two binary strings in O(n^1.59) where n is the length of binary string.
+
+    Advantages of Divide and Conquer Algorithm
+        - Solving difficult problems
+        - Algorithm efficiency
+        - Parallelism: Normally Divide and Conquer algorithms are used in multi-processor machines having shared-memory systems where the communication of data between processors does not need to be planned in advance, because distinct sub-problems can be executed on different processors. 
+        - Memory access: These algorithms naturally make an efficient use of memory caches. Since the subproblems are small enough to be solved in cache without using the main memory that is slower one. Any algorithm that uses cache efficiently is called cache oblivious.
+
+    Disadvantages of Divide and Conquer Algorithm
+        - Overhead: The process of dividing the problem into subproblems and then combining the solutions can require additional time and resources. This overhead can be significant for problems that are already relatively small or that have a simple solution.
+        - Complexity: Dividing a problem into smaller subproblems can increase the complexity of the overall solution. This is particularly true when the subproblems are interdependent and must be solved in a specific order.
+        - Difficulty of implementation: Some problems are difficult to divide into smaller subproblems or require a complex algorithm to do so. In these cases, it can be challenging to implement a divide and conquer solution.
+        - Memory limitations: When working with large data sets, the memory requirements for storing the intermediate results of the subproblems can become a limiting factor.
+*/
+
+/* Merge Sort Algorithm
+    Complexity analysis of merge sort: 
+        - Time complexity: O(nlogn)
+        - Auxiliary space: O(n), additional space is required for the temporary array used during merging. 
+
+    Application: 
+        - Sorting large datasets
+        - External sorting (whe the dataset is too large to fit in memory)
+        - Inversion counting. 
+        - Merge sort and its variations are used in library methods of programming languages. 
+        - It is a preferred algorithm for sorting linked lists. 
+        - It can be easily parallelized as we can independently sort subarrays and then merge. 
+        - The merge function of merge sort to efficiently solve the problems like union and intersection of two sorted arrays. 
+
+    Advantages of merge sort: 
+        - Stability: Merge sort is a stable sorting algorithm, which means it maintains the relative order of equal elements in the input array. 
+        - Guaranteed worst-case performance: Merge sort has a worst-case time complexity of O(nlogn), which means it performs well even on large datasets. 
+        - Simple to implement: The divide-and-conquer approach is straightforward. 
+        - Naturally Parallel: We independently merge subarrays that makes it suitable for parallel processing. 
+
+    Disadvantages of merge sort: 
+        - Space complexity: merge sort requires additional memory to store the merged sub-arrays during the sorting process. 
+        - Not in-place: Merge sort is not an in-place sorting algorithm, which means it requires additional memory to store the sorted data. This can be a disadvantage in applications where memory usage is a concern. 
+        - Slower than QuickSort in general: Quick sort is more cache friendly because it works in-place. 
+*/
+
+/* Quick Sort Algorithm
+    QuickSort is a sorting algorithm based on the divide and conquer that picks an element as a pivot and partitions the given array around the picked pivot by placing the pivot in its correct position in the sorted array. 
+
+    How does QuickSort Algorithm work? 
+        QuickSort works on the principle of divide and conquer, breaking down the problem into smaller sub-problems. 
+        
+        There are mainly three steps in the algorithm: 
+            1. Choose a Pivot: Select an element from the array as the pivot. The choice of pivot can vary (e.g, first element, last element, random element, or median)
+            2. Partition the Array: Rearrange the array around the pivot. After partitioning, all element smaller than the pivot will be on its left, and all elements greater than the pivot will be on its right. The pivot is then in its correst position, and we obtain the index of the pivot. 
+            3. Recursive Call: Recursively apply the same process to the two partitioned sub-arrays(left and right of the pivot). 
+            4. Base case: The recursion stops when there is only one element left in the sub-array, as a single element is already sorted. 
+
+        Choice of Pivot
+            There are many different choices for picking pivots. 
+                + Always pick the first (or last) element as a pivot.
+                + Pick a random element as a pivot. This is a preferred approach because it does not have a pattern for which the worst case happens. 
+                + Pick the median element is pivot. This is an ideal approach in terms of time complexity as we can find median in liner time and the partition function will always divide the input array into two halves. Bit it is low on average as median finding has high constants. 
+
+        Quick Sort by picking the first element as the Pivot
+            The key function is quick sort is a partition. The target of partitions is to put the pivot in its correct position if the array is sorted and the smaller (or equal) to its left and higher elements to its right and do all this in linear time. 
+
+            Partition algorithm
+                There can be many ways to do partion, the followng pseudo-code adopts the method given in the CLRS book. 
+                    + We start from the leftmost element and keep track of the index smaller (or equal) elements as i. 
+                    + While traversing, if we find a smaller (or equal) element, we swap the current element with arr[i];
+                    + Otherwise, we ignore the current element. 
+
+                int partition_left(vector<int> &a, int left, int right) {
+                    int pivot = a[left];
+                    int k = right;
+                    for (int i = right; i > left; i--) {
+                        if (a[i] > pivot) {
+                            swap(a[i], a[k]);
+                            k--;
+                        }
+                    }
+                    swap(a[k], a[left]);
+                    return k;
+                }
+
+                int partition_right(vector<int> &a, int left, int right) {
+                    int pivot = a[right];
+                    int k = left;
+                    for (int i = left; i < right; i++) {
+                        if (a[i] < pivot) {
+                            swap(a[i], a[k]);
+                            k++;
+                        }
+                    }
+                    swap(a[k], a[right]);
+                    return k;
+                }
+
+    Partition Algorithm
+        The key process in quickSort is partition(). There are three common algorithms to partition. All these algorithms have O(n) time complexity. 
+            1. Naive Partition: Here we create copy of the array. First put all smaller elements and then all greater. Finally we copy the temporary back to original array. This requires O(n) extra space. 
+
+            2. Lomuto Partition. We have used this partition in this article. This is a simple algorithm, we keep track of index of smaller elements and keep swapping. We have used it here in this article because of its simplicity. 
+
+            3. Hoare's Partition: This is the fastest of all. Here we traverse array from both sides and keep swapping greater element on left with smaller on right while the array is not partitioned. 
+
+    Advantages of Quick Sort
+        + It is a divide-and-conquer algorithm that makes it easier to solve problems. 
+        + It is efficient on large data sets. 
+        + It has a low overhead, as it only requires a small amount of memory to function. 
+        + It is Cache Friendly as we work on the same array to sort and do not copy data to any auxiliary array. 
+        + Fastest general purpose algorithm for large data when stability is not required. 
+        + It is tail recursive and hence all the tail call optimization can be done. 
+
+    Disadvantages of Quick Sort
+        + It has a worst-case time complexity of O(n^2), which occurs when the pivot is chosen poorly. 
+        + It is not a good choice for small data sets. 
+        + It is not a stable sort, meaning that if two elements have the same key, their relative order will not be preserved in the sorted output in case of quick sort, because here we are swapping elements according to the pivot's position (without considering their original positions). 
+
+    Application of Quick Sort
+        - Efficient for sorting large datasets with O(nlogn) average-case time complexity.
+        - Used in partitioning problems like finding the kth smallest element or dividing arrays by pivot. 
+        - Applied in cryptography for generating random permutations and unpredictable encryption keys. 
+        - Partitioning step can be parallelized for improved performance in multi-core or distributed systems. 
+        - Important in theoretical computer science for analyzing average case complexity adn developing new techniques. 
+
+    Lomuto's Partition Scheme: 
+        This algorithm works by assuming the pivot element as the last element. If any other element is given as a pivot element then swap it first with the last element. Now initialize two variables i as low and j also low, iterate over the array and increment i when arr[j] <= pivot and swap arr[i] with arr[j] otherwise increment only j. After coming out from the loop swap arr[i + 1] with arr[hi]. This i stores the pivot element. 
+            - Time Complexity: O(n^2)
+            - Auxiliary Space: O(1)
+
+    Hoare's Partition Scheme
+        Hoare's Partition Scheme works by initializing two indexes that start at two ends, the two indexes move toward each other until an inversion is (A smaller value on the left side and greater value on the right side) found. When an inversion is found, two values are swapped and the process is repeated. 
+            - Time Complexity: O(n)
+            - Auxiliary Space: O(1)
+
+    Note: If we change Hoare's partition to pick the last element as pivot, then the Hoare's partition may cause QuickSort to go into an infinite recursion. For example, {10, 5, 6, 20} and pivot is arr[right] then returned index will always be high and call to same QuickSort will be made. To handle a random pivot, we can always swap that random element with the first element and simply follow the above algorithm. 
+
+    Comparision: 
+        1. Hoare's scheme is more efficient than Lomuto's partition scheme because it does three times fewer swaps on average, and it creates efficient partitions even when all values are equal. 
+
+        2. Like Lomuto's partition scheme, Hoare partitioning also causes Quick Sort to degrade to O(n^2) when the input array is already sorted, it also doesn't produce a stable sort. 
+    
+        3. Note that in this scheme, the pivot’s final location is not necessarily at the index that was returned, and the next two segments that the main algorithm recurs on are (lo..p) and (p+1..hi) as opposed to (lo..p-1) and (p+1..hi) as in Lomuto’s scheme.
+
+        4. Both Hoare’s Partition, as well as Lomuto’s partition, are unstable.
+
+*/
+
+/* Tail Recursion
+    Tail recursion is defined as recursive function in which the recursive call is the last statement that is executed by the function. So basicaaly nothing is left to execute after the recursion call. 
+
+    Need for tail recursion
+        The tail recursive functions are considered better than non-tail recursive functions as tail-recursion can be optimized by the compiler. 
+
+        Compiler usually execute recursive procedures by using stack. This stack consists of all the pertinent information, including the parameter values, for each recursive call. When a procedure is called, its information is pushed onto a stack, and when the function terminates the information is popped out of the stack. Thus for the non-tail recursive funtions, the stack depth (maximum amount of stack space used at any time during compilation) is more. 
+*/
+
+/* Decrease and Conquer
+    As divide-and-conquer approach is already discussed, which include following steps: Divide the problem into a number of subproblems that are smaller instances of the same problem. Conquer the sub problems by solving them recursively. If the subproblem sizes are small enough, however, just solve the sub problems in a straightforward manner. Combine the solutions to the sub problems into the solution for the original problem.
+
+    Similarly, The approach decrease-and-conquer works, it also include following steps: 
+        + Decrease or reduce problem instance to smaller instance of the same problem and extend solution. 
+        + Conquer the problem by solving smaller instance of the problem. 
+        + Extend solution of smaller instance to obtain solution to original problem. 
+        
+    Basic idea of the decrease-and-conquer technique is based on exploiting the relationship between a solution to a given instance of a problem and a solution to its smaller instance. This approach is also known as incremental or inductive approach. 
+
+
+
+
+
+*/

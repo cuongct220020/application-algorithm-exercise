@@ -1,0 +1,22 @@
+------------------- Kỹ thuật xử lý số nguyên lớn ---------------------
+
+Trong C++, kiểu dữ liệu nguyên thuỷ long long có thể lưu trữ được tới 20 chữa số (10^19), kiểu dữ liệu nguyên thuỷ int có thể lưu trữ được 10 chữ số (10^9)
+
+Trong chuyên đề này chúng ta sẽ học cách biểu diễn các số nguyên lớn tới hàng trăm, hàng nghìn, thậm chí vài chục nghìn chữ số,...dựa vào khả năng lưu trữ chuỗi ký tự của máy tính. Các số nguyên sẽ được chuyển sang dạng chuỗi ký tự, sau đó thiết kế những phép toán cộng, trừ, nhân, chia, đồng dư tương ứng. Do độ dài của chuỗi ký tự phụ thuộc vào khả năng lưu trữ của trình biên dịch (mà thông thường rất lớn) nên ta dễ dàng giải quyết vấn đề. 
+
+
+------------------- Các biểu diễn số nguyên lớn ---------------------
+
+1. Biểu diễn bằng chuỗi ký tự: Các chữ số sẽ tương ứng với các ký tự trong chuõi, và độ dài của các số khi đó sẽ phụ thuộc vào chương trình dịch. 
+            typedef string bignum_str;
+
+2. Biểu diễn bằng mảng các ký tự: Với phương pháp này, mỗi chữ số sẽ tương ứng với một ký tự trong mảng, đồng thời ta duy trì một biến đếm để kiểm soát số chữ số ban đầu. 
+            typedef vector<int> vi;
+
+        
+
+Tài liệu học tập
+https://viblo.asia/p/xu-ly-so-nguyen-lon-phan-1-nhapxuat-phep-so-sanh-phep-cong-va-phep-tru-V3m5WQpxZO7
+
+https://viblo.asia/p/xu-ly-so-nguyen-lon-phan-2-cac-phep-toan-nhan-Qpmle1Yolrd
+
