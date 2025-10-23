@@ -1,5 +1,5 @@
 # Application Algorithm Exercise
-> IT3170 - Application Algorithm - Hanoi University of Science and Technology
+> **IT3170 - Application Algorithm - Hanoi University of Science and Technology**
 
 This repository contains algorithm and data structure exercises implemented in C++.
 
